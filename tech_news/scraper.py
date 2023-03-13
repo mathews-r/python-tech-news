@@ -46,13 +46,13 @@ def scrape_news(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
 
     url = soup.find("link", rel="canonical").get("href")
-    title = soup.find("h1", class_="entry-title").text
+    title = soup.find("h1", class_="entry-title").text.strip()
     timestamp = soup.find("li", class_="meta-date").text
     writer = soup.find("a", class_="url fn n").text
     reading_time = soup.find("li", class_="meta-reading-time").text[:2]
-    summary = soup.find_all("p")[0].text
+    summary = soup.find_all("p")[0].text.strip()
     category = soup.find("span", class_="label").text
-    print(summary)
+    # print(summary)
 
     dict_news = {
         "url": url,
@@ -63,7 +63,7 @@ def scrape_news(html_content):
         "summary": summary,
         "category": category,
     }
-    print(dict_news)
+    # print(dict_news)
     return dict_news
 
 
@@ -72,7 +72,11 @@ def get_tech_news(amount):
     pass
 
 
-html = fetch(
+blog = "https://blog.betrybe.com/linguagem-de-programacao/o-que-e-array/"
+empowerment = (
     "https://blog.betrybe.com/carreira/empowerment-lideranca-o-que-e/"
 )
+
+# html = fetch(blog)
+html = fetch(empowerment)
 scrape_news(html)
