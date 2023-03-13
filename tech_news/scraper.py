@@ -8,9 +8,9 @@ base_url = "https://blog.betrybe.com/"
 
 
 # Requisito 1
-def fetch(url: str, wait: int = 1):
+def fetch(url: str):
     try:
-        response = requests.get(url, timeout=wait, headers=headers)
+        response = requests.get(url, headers=headers)
         time.sleep(1)
         response.raise_for_status()
     except (requests.HTTPError, requests.ReadTimeout):
