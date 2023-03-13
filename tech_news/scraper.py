@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
+from tech_news import database
 
 
 headers = {"User-Agent": "Fake user-agent"}
@@ -52,7 +53,6 @@ def scrape_news(html_content):
     reading_time = soup.find("li", class_="meta-reading-time").text[:2]
     summary = soup.find_all("p")[0].text.strip()
     category = soup.find("span", class_="label").text
-    # print(summary)
 
     dict_news = {
         "url": url,
@@ -63,20 +63,25 @@ def scrape_news(html_content):
         "summary": summary,
         "category": category,
     }
-    # print(dict_news)
     return dict_news
 
 
 # Requisito 5
 def get_tech_news(amount):
-    pass
+    response = fetch(base_url)
+
+    get_all_links = scrape_updates(response)
+
+    list_news = []
+    for link in get_all_links:
+        news = fetch(link)
+        list_news.append(scrape_news(news))
+
+    data = list_news.count(amount)
+    print(data)
+    # database.create_news(data)
+
+    return data
 
 
-blog = "https://blog.betrybe.com/linguagem-de-programacao/o-que-e-array/"
-empowerment = (
-    "https://blog.betrybe.com/carreira/empowerment-lideranca-o-que-e/"
-)
-
-# html = fetch(blog)
-html = fetch(empowerment)
-scrape_news(html)
+get_tech_news(5)
