@@ -68,20 +68,23 @@ def scrape_news(html_content):
 
 # Requisito 5
 def get_tech_news(amount):
-    response = fetch(base_url)
-
-    get_all_links = scrape_updates(response)
+    next_page_url = base_url
 
     list_news = []
-    for link in get_all_links:
-        news = fetch(link)
-        list_news.append(scrape_news(news))
 
-    data = list_news.count(amount)
-    print(data)
-    # database.create_news(data)
+    while True:
+        url = next_page_url
+        print(f"Scraping {url}")
+        response = fetch(url)
+        get_all_links = scrape_updates(response)
 
-    return data
+        for link in get_all_links:
+            if len(list_news) < amount:
+                content = fetch(link)
+                list_news.append(scrape_news(content))
+                next_page_url = scrape_next_page_link(response)
+            else:
+                break
 
-
-get_tech_news(5)
+        database.create_news(list_news)
+        return list_news
