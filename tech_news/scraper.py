@@ -43,7 +43,28 @@ def scrape_next_page_link(html_content):
 
 # Requisito 4
 def scrape_news(html_content):
-    pass
+    soup = BeautifulSoup(html_content, "html.parser")
+
+    url = soup.find("link", rel="canonical").get("href")
+    title = soup.find("h1", class_="entry-title").text
+    timestamp = soup.find("li", class_="meta-date").text
+    writer = soup.find("a", class_="url fn n").text
+    reading_time = soup.find("li", class_="meta-reading-time").text[:2]
+    summary = soup.find_all("p")[0].text
+    category = soup.find("span", class_="label").text
+    print(summary)
+
+    dict_news = {
+        "url": url,
+        "title": title,
+        "timestamp": timestamp,
+        "writer": writer,
+        "reading_time": int(reading_time),
+        "summary": summary,
+        "category": category,
+    }
+    print(dict_news)
+    return dict_news
 
 
 # Requisito 5
@@ -51,7 +72,7 @@ def get_tech_news(amount):
     pass
 
 
-html = fetch(base_url)
-scrape_next_page_link(
-    '<span aria-current="page" class="page-numbers current">80</span>'
+html = fetch(
+    "https://blog.betrybe.com/carreira/empowerment-lideranca-o-que-e/"
 )
+scrape_news(html)
