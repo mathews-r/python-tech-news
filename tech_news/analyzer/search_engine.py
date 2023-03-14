@@ -12,7 +12,6 @@ def search_by_title(title):
     for news in list_news:
         news_filtred.append((news["title"], news["url"]))
 
-    # print(news_filtred)
     return news_filtred
 
 
@@ -23,7 +22,12 @@ def search_by_date(date):
 
 # Requisito 9
 def search_by_category(category):
-    pass
+    filter_category = {"category": {"$regex": category, "$options": "i"}}
+    list_news = search_news(filter_category)
 
+    news_filtred = []
+    for news in list_news:
+        news_filtred.append((news["title"], news["url"]))
 
-search_by_title("bacana")
+    print(news_filtred)
+    return news_filtred
