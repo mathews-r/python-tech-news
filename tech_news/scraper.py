@@ -8,7 +8,6 @@ headers = {"User-Agent": "Fake user-agent"}
 base_url = "https://blog.betrybe.com/"
 
 
-# Requisito 1
 def fetch(url: str):
     try:
         response = requests.get(url, headers=headers)
@@ -21,7 +20,6 @@ def fetch(url: str):
     return response.text
 
 
-# Requisito 2
 def scrape_updates(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
 
@@ -31,7 +29,6 @@ def scrape_updates(html_content):
     return news_list
 
 
-# Requisito 3
 def scrape_next_page_link(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
     next_page = soup.find("a", class_="next page-numbers")
@@ -42,7 +39,6 @@ def scrape_next_page_link(html_content):
     return next_page.get("href")
 
 
-# Requisito 4
 def scrape_news(html_content):
     soup = BeautifulSoup(html_content, "html.parser")
 
@@ -66,7 +62,6 @@ def scrape_news(html_content):
     return dict_news
 
 
-# Requisito 5
 def get_tech_news(amount):
     next_page_url = base_url
     news = []

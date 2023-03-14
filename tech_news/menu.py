@@ -8,7 +8,6 @@ from tech_news.analyzer.search_engine import (
 )
 
 
-# Requisitos 11 e 12
 def analyzer_menu():
     input_user = input(
         """Selecione uma das opções a seguir:

@@ -2,7 +2,6 @@ from tech_news.database import find_news
 from collections import Counter
 
 
-# Requisito 10
 def top_5_categories():
     news = find_news()
 
