@@ -1,7 +1,7 @@
 from bs4 import BeautifulSoup
 import requests
 import time
-from tech_news import database
+from tech_news.database import create_news
 
 
 headers = {"User-Agent": "Fake user-agent"}
@@ -69,22 +69,23 @@ def scrape_news(html_content):
 # Requisito 5
 def get_tech_news(amount):
     next_page_url = base_url
+    news = []
 
-    list_news = []
-
-    while True:
-        url = next_page_url
-        print(f"Scraping {url}")
-        response = fetch(url)
+    while next_page_url:
+        print(f"Scraping {next_page_url}")
+        response = fetch(next_page_url)
         get_all_links = scrape_updates(response)
 
         for link in get_all_links:
-            if len(list_news) < amount:
+            if len(news) < amount:
                 content = fetch(link)
-                list_news.append(scrape_news(content))
+                news.append(scrape_news(content))
                 next_page_url = scrape_next_page_link(response)
             else:
-                break
+                next_page_url = None
+    create_news(news)
+    return news
 
-        database.create_news(list_news)
-        return list_news
+
+# teste = get_tech_news(30)
+# print(len(teste))
