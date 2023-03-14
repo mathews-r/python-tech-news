@@ -1,4 +1,11 @@
 import sys
+from tech_news.scraper import get_tech_news
+from tech_news.analyzer.ratings import top_5_categories
+from tech_news.analyzer.search_engine import (
+    search_by_title,
+    search_by_date,
+    search_by_category,
+)
 
 
 # Requisitos 11 e 12
@@ -15,13 +22,21 @@ def analyzer_menu():
     )
     match input_user:
         case "0":
-            print("Digite quantas notícias serão buscadas")
+            data_user = input("Digite quantas notícias serão buscadas: ")
+            get_tech_news(int(data_user))
         case "1":
-            print("Digite o título:")
+            data_user = input("Digite o título: ")
+            search_by_title(data_user)
         case "2":
-            print("Digite a data no formato aaaa-mm-dd:")
+            data_user = input("Digite a data no formato aaaa-mm-dd: ")
+            search_by_date(data_user)
         case "3":
-            print("Digite a categoria:")
+            data_user = input("Digite a categoria: ")
+            search_by_category(data_user)
+        case "4":
+            top_5_categories()
+        case "5":
+            print("Encerrando script")
         case _:
             sys.stderr.write("Opção inválida\n")
 
