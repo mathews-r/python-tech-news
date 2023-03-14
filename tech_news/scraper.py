@@ -85,7 +85,3 @@ def get_tech_news(amount):
                 next_page_url = None
     create_news(news)
     return news
-
-
-# teste = get_tech_news(30)
-# print(len(teste))
