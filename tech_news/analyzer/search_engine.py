@@ -3,7 +3,8 @@ from tech_news.database import search_news
 
 # Requisito 7
 def search_by_title(title):
-    # referencia: https://nilsoncunha.github.io/portfolioweb/comandos-uteis-em-mongodb-e-python/
+    # referencia:
+    # https://nilsoncunha.github.io/portfolioweb/comandos-uteis-em-mongodb-e-python/
     filter_title = {"title": {"$regex": title, "$options": "i"}}
     list_news = search_news(filter_title)
 
