@@ -1,4 +1,5 @@
 from tech_news.database import search_news
+from datetime import datetime
 
 
 # Requisito 7
@@ -17,7 +18,19 @@ def search_by_title(title):
 
 # Requisito 8
 def search_by_date(date):
-    pass
+    try:
+        d = datetime.strptime(date, "%Y-%m-%d")
+        new_date = d.strftime("%d/%m/%Y")
+        filter_date = {"timestamp": new_date}
+        list_news = search_news(filter_date)
+
+        news_filtred = []
+        for news in list_news:
+            news_filtred.append((news["title"], news["url"]))
+    except ValueError:
+        raise (ValueError("Data inválida"))
+
+    return news_filtred
 
 
 # Requisito 9
@@ -29,5 +42,4 @@ def search_by_category(category):
     for news in list_news:
         news_filtred.append((news["title"], news["url"]))
 
-    print(news_filtred)
     return news_filtred
